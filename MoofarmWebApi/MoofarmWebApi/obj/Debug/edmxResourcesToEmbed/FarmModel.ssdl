@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TestModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ContestsDetails">
+    <Key>
+      <PropertyRef Name="ContestId" />
+    </Key>
+    <Property Name="ContestId" Type="int" Nullable="false" />
+    <Property Name="ContestName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="EntryAmount" Type="int" />
+  </EntityType>
+  <EntityType Name="UserDetails">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" />
+    <Property Name="WalletId" Type="int" Nullable="false" />
+    <Property Name="Discount" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserToContestMapper">
+    <Key>
+      <PropertyRef Name="TransactionId" />
+    </Key>
+    <Property Name="TransactionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ContestId" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="DiscountApplied" Type="int" />
+    <Property Name="DepositAmount" Type="int" />
+    <Property Name="BonusAmount" Type="int" />
+    <Property Name="WinningsAmount" Type="int" />
+  </EntityType>
+  <EntityType Name="WalletsAccount">
+    <Key>
+      <PropertyRef Name="WalletId" />
+    </Key>
+    <Property Name="WalletId" Type="int" Nullable="false" />
+    <Property Name="DepositBucket" Type="int" />
+    <Property Name="BonusBucket" Type="int" />
+    <Property Name="WinningsBucket" Type="int" />
+    <Property Name="TotalWalletAmount" Type="int" />
+  </EntityType>
+  <Association Name="FK_UserDetails_UserDetails">
+    <End Role="UserDetails" Type="Self.UserDetails" Multiplicity="1" />
+    <End Role="UserDetails1" Type="Self.UserDetails" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="UserDetails">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserDetails1">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserToContestMapper_UserToContestMapper">
+    <End Role="UserToContestMapper" Type="Self.UserToContestMapper" Multiplicity="1" />
+    <End Role="UserToContestMapper1" Type="Self.UserToContestMapper" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="UserToContestMapper">
+        <PropertyRef Name="TransactionId" />
+      </Principal>
+      <Dependent Role="UserToContestMapper1">
+        <PropertyRef Name="TransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TestModelStoreContainer">
+    <EntitySet Name="ContestsDetails" EntityType="Self.ContestsDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserToContestMapper" EntityType="Self.UserToContestMapper" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="WalletsAccount" EntityType="Self.WalletsAccount" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_UserDetails_UserDetails" Association="Self.FK_UserDetails_UserDetails">
+      <End Role="UserDetails" EntitySet="UserDetails" />
+      <End Role="UserDetails1" EntitySet="UserDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserToContestMapper_UserToContestMapper" Association="Self.FK_UserToContestMapper_UserToContestMapper">
+      <End Role="UserToContestMapper" EntitySet="UserToContestMapper" />
+      <End Role="UserToContestMapper1" EntitySet="UserToContestMapper" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

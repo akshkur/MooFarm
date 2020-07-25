@@ -10,3 +10,9 @@ https://localhost:44329/AddContest?userId=2&contestId=1&discount=20   //to subsc
 https://localhost:44329   //default url for fetching list of users.
 
 
+//For SQl
+
+There is a file named as Sql-scripts which contains all the sql scripts after executing them, 
+you can get all the tables and then you can insert the data into that and check.
+
+
