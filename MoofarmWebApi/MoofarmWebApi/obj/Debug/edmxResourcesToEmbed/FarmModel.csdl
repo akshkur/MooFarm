@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ContestsDetail">
+    <Key>
+      <PropertyRef Name="ContestId" />
+    </Key>
+    <Property Name="ContestId" Type="Int32" Nullable="false" />
+    <Property Name="ContestName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EntryAmount" Type="Int32" />
+  </EntityType>
+  <EntityType Name="UserDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="WalletId" Type="Int32" Nullable="false" />
+    <Property Name="Discount" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="UserDetails1" Relationship="Self.FK_UserDetails_UserDetails" FromRole="UserDetails" ToRole="UserDetails1" />
+    <NavigationProperty Name="UserDetail1" Relationship="Self.FK_UserDetails_UserDetails" FromRole="UserDetails1" ToRole="UserDetails" />
+  </EntityType>
+  <EntityType Name="UserToContestMapper">
+    <Key>
+      <PropertyRef Name="TransactionId" />
+    </Key>
+    <Property Name="TransactionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ContestId" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="DiscountApplied" Type="Int32" />
+    <Property Name="DepositAmount" Type="Int32" />
+    <Property Name="BonusAmount" Type="Int32" />
+    <Property Name="WinningsAmount" Type="Int32" />
+    <NavigationProperty Name="UserToContestMapper1" Relationship="Self.FK_UserToContestMapper_UserToContestMapper" FromRole="UserToContestMapper" ToRole="UserToContestMapper1" />
+    <NavigationProperty Name="UserToContestMapper2" Relationship="Self.FK_UserToContestMapper_UserToContestMapper" FromRole="UserToContestMapper1" ToRole="UserToContestMapper" />
+  </EntityType>
+  <EntityType Name="WalletsAccount">
+    <Key>
+      <PropertyRef Name="WalletId" />
+    </Key>
+    <Property Name="WalletId" Type="Int32" Nullable="false" />
+    <Property Name="DepositBucket" Type="Int32" />
+    <Property Name="BonusBucket" Type="Int32" />
+    <Property Name="WinningsBucket" Type="Int32" />
+    <Property Name="TotalWalletAmount" Type="Int32" />
+  </EntityType>
+  <Association Name="FK_UserDetails_UserDetails">
+    <End Role="UserDetails" Type="Self.UserDetail" Multiplicity="1" />
+    <End Role="UserDetails1" Type="Self.UserDetail" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="UserDetails">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserDetails1">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserToContestMapper_UserToContestMapper">
+    <End Role="UserToContestMapper" Type="Self.UserToContestMapper" Multiplicity="1" />
+    <End Role="UserToContestMapper1" Type="Self.UserToContestMapper" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="UserToContestMapper">
+        <PropertyRef Name="TransactionId" />
+      </Principal>
+      <Dependent Role="UserToContestMapper1">
+        <PropertyRef Name="TransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TestEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ContestsDetails" EntityType="Self.ContestsDetail" />
+    <EntitySet Name="UserDetails" EntityType="Self.UserDetail" />
+    <EntitySet Name="UserToContestMappers" EntityType="Self.UserToContestMapper" />
+    <EntitySet Name="WalletsAccounts" EntityType="Self.WalletsAccount" />
+    <AssociationSet Name="FK_UserDetails_UserDetails" Association="Self.FK_UserDetails_UserDetails">
+      <End Role="UserDetails" EntitySet="UserDetails" />
+      <End Role="UserDetails1" EntitySet="UserDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserToContestMapper_UserToContestMapper" Association="Self.FK_UserToContestMapper_UserToContestMapper">
+      <End Role="UserToContestMapper" EntitySet="UserToContestMappers" />
+      <End Role="UserToContestMapper1" EntitySet="UserToContestMappers" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

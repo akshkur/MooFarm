@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TestWalletModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="TestWallets" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ContestsDetails" EntityType="TestWalletModel.ContestsDetail" />
+    <EntitySet Name="UserDetails" EntityType="TestWalletModel.UserDetail" />
+    <EntitySet Name="UserToContestMappers" EntityType="TestWalletModel.UserToContestMapper" />
+    <EntitySet Name="WalletsAccounts" EntityType="TestWalletModel.WalletsAccount" />
+    <AssociationSet Name="FK_UserDetails_UserDetails" Association="TestWalletModel.FK_UserDetails_UserDetails">
+      <End Role="UserDetail" EntitySet="UserDetails" />
+      <End Role="UserDetail1" EntitySet="UserDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserToContestMapper_UserToContestMapper" Association="TestWalletModel.FK_UserToContestMapper_UserToContestMapper">
+      <End Role="UserToContestMapper" EntitySet="UserToContestMappers" />
+      <End Role="UserToContestMapper1" EntitySet="UserToContestMappers" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="ContestsDetail">
+    <Key>
+      <PropertyRef Name="ContestId" />
+    </Key>
+    <Property Name="ContestId" Type="Int32" Nullable="false" />
+    <Property Name="ContestName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EntryAmount" Type="Int32" />
+  </EntityType>
+  <EntityType Name="UserDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="WalletId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="UserDetails1" Relationship="TestWalletModel.FK_UserDetails_UserDetails" FromRole="UserDetail" ToRole="UserDetail1" />
+    <NavigationProperty Name="UserDetail1" Relationship="TestWalletModel.FK_UserDetails_UserDetails" FromRole="UserDetail1" ToRole="UserDetail" />
+  </EntityType>
+  <EntityType Name="UserToContestMapper">
+    <Key>
+      <PropertyRef Name="TransactionId" />
+    </Key>
+    <Property Name="TransactionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ContestId" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="DiscountApplied" Type="Int32" />
+    <Property Name="DepositAmount" Type="Int32" />
+    <Property Name="BonusAmount" Type="Int32" />
+    <Property Name="WinningsAmount" Type="Int32" />
+    <NavigationProperty Name="UserToContestMapper1" Relationship="TestWalletModel.FK_UserToContestMapper_UserToContestMapper" FromRole="UserToContestMapper" ToRole="UserToContestMapper1" />
+    <NavigationProperty Name="UserToContestMapper2" Relationship="TestWalletModel.FK_UserToContestMapper_UserToContestMapper" FromRole="UserToContestMapper1" ToRole="UserToContestMapper" />
+  </EntityType>
+  <EntityType Name="WalletsAccount">
+    <Key>
+      <PropertyRef Name="WalletId" />
+    </Key>
+    <Property Name="WalletId" Type="Int32" Nullable="false" />
+    <Property Name="DepositBucket" Type="Int32" />
+    <Property Name="BonusBucket" Type="Int32" />
+    <Property Name="WinningsBucket" Type="Int32" />
+    <Property Name="TotalWalletAmount" Type="Int32" />
+  </EntityType>
+  <Association Name="FK_UserDetails_UserDetails">
+    <End Type="TestWalletModel.UserDetail" Role="UserDetail" Multiplicity="1" />
+    <End Type="TestWalletModel.UserDetail" Role="UserDetail1" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="UserDetail">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserDetail1">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserToContestMapper_UserToContestMapper">
+    <End Type="TestWalletModel.UserToContestMapper" Role="UserToContestMapper" Multiplicity="1" />
+    <End Type="TestWalletModel.UserToContestMapper" Role="UserToContestMapper1" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="UserToContestMapper">
+        <PropertyRef Name="TransactionId" />
+      </Principal>
+      <Dependent Role="UserToContestMapper1">
+        <PropertyRef Name="TransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

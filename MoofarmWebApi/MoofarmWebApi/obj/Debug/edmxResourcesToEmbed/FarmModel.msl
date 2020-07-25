@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TestModelStoreContainer" CdmEntityContainer="TestEntities">
+    <EntitySetMapping Name="ContestsDetails">
+      <EntityTypeMapping TypeName="TestModel.ContestsDetail">
+        <MappingFragment StoreEntitySet="ContestsDetails">
+          <ScalarProperty Name="ContestId" ColumnName="ContestId" />
+          <ScalarProperty Name="ContestName" ColumnName="ContestName" />
+          <ScalarProperty Name="EntryAmount" ColumnName="EntryAmount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserDetails">
+      <EntityTypeMapping TypeName="TestModel.UserDetail">
+        <MappingFragment StoreEntitySet="UserDetails">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="WalletId" ColumnName="WalletId" />
+          <ScalarProperty Name="Discount" ColumnName="Discount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserToContestMappers">
+      <EntityTypeMapping TypeName="TestModel.UserToContestMapper">
+        <MappingFragment StoreEntitySet="UserToContestMapper">
+          <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+          <ScalarProperty Name="ContestId" ColumnName="ContestId" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="DiscountApplied" ColumnName="DiscountApplied" />
+          <ScalarProperty Name="DepositAmount" ColumnName="DepositAmount" />
+          <ScalarProperty Name="BonusAmount" ColumnName="BonusAmount" />
+          <ScalarProperty Name="WinningsAmount" ColumnName="WinningsAmount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WalletsAccounts">
+      <EntityTypeMapping TypeName="TestModel.WalletsAccount">
+        <MappingFragment StoreEntitySet="WalletsAccount">
+          <ScalarProperty Name="WalletId" ColumnName="WalletId" />
+          <ScalarProperty Name="DepositBucket" ColumnName="DepositBucket" />
+          <ScalarProperty Name="BonusBucket" ColumnName="BonusBucket" />
+          <ScalarProperty Name="WinningsBucket" ColumnName="WinningsBucket" />
+          <ScalarProperty Name="TotalWalletAmount" ColumnName="TotalWalletAmount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
